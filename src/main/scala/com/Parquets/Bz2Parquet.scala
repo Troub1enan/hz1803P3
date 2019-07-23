@@ -116,8 +116,8 @@ object Bz2Parquet {
     })
     // 构建DF
     val df = sQLContext.createDataFrame(rowRDD,SchemaUtils.logStructType)
-    // 存储到指定位置
-    df.write.parquet(outputPath)
+    // 存储到指定位置,这边第一个为一级分区，第二个为二级分区
+    df.write.partitionBy("provincename","cityname").parquet(outputPath)
     sc.stop()
   }
 }
